@@ -1,21 +1,31 @@
-package com.example.demo;
+package com.example.demo.service;
 
-import com.example.demo.Product;
-import com.example.demo.ProductRepository;
+import com.example.demo.model.Product;
+import com.example.demo.model.ShoppingList;
+import com.example.demo.model.User;
+import com.example.demo.model.UserDTO;
+import com.example.demo.repository.ProductRepository;
+import com.example.demo.repository.ShoppingListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private ShoppingListRepository shoppingListRepository;
 
     // Get all products
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<Product> getAllProducts(Long listId) {
+                  return productRepository.findByShoppingListId(listId);
     }
 
     // Add a new product
