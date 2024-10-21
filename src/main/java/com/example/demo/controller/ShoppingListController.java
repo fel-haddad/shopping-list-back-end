@@ -46,5 +46,10 @@ public class ShoppingListController {
         String username = principal.getName();
         return shoppingListService.createShoppingList(username, shoppingList);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable Long id) {
+        shoppingListService.deleteById(id);
+    }
 }
 

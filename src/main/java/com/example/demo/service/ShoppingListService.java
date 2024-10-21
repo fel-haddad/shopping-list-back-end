@@ -31,5 +31,9 @@ public class ShoppingListService {
         shoppingList.setUser(user);
         return shoppingListRepository.save(shoppingList);
     }
+
+    public void deleteById(Long id) {
+        shoppingListRepository.deleteById(id);
+    }
 }
 
