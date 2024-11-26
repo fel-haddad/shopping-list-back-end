@@ -45,8 +45,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll() // Allow public access to /api/auth/ paths
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/h2-console/**").permitAll() // just for localhost
                         .anyRequest().authenticated() // Secure all other routes
                 )
+                .headers(headers -> headers.frameOptions().disable()) // just for localhost
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Use stateless sessions
                 )
