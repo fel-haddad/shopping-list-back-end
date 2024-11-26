@@ -14,8 +14,8 @@ import java.util.Map;
 @Component
 public class JwtTokenUtil {
 
-    private final String SECRET_KEY = "mysecretkey"; // Change this to a more secure key
-    private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
+    private final String SECRET_KEY = "XQKSPFVCdS4qtAXhdNkSjk6Q3y80XEp6Q3y8lnO13C1Yt2UqXQKSPFVCdS4qtAXhdNkSjk6Q3y8lnO13C1Yt2UJRDb7YofNvynVQZjkedFYg536Q3y8lnO13C1Yt2UqXQKSPFVCdS4qtAXhdNkSjk6Q3y8lnO13C1Yt2UJRDb7YofNvynVQZjk6Q3y80XEpedFYg53dHrPSoSIKRDGVyH7pFNTeLkrTT8Sm0qNqX";
+    private final long EXPIRATION_TIME = 1000 * 3600;
 
     public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
@@ -23,13 +23,7 @@ public class JwtTokenUtil {
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
-                .compact();
+        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)).signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 
     public boolean validateToken(String token, String username) {
