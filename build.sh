@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Update package list and install OpenJDK 17
-sudo apt-get update
-sudo apt-get install -y openjdk-17-jdk
+# Install OpenJDK 17 without sudo (for environments that support apt-get)
+apt-get update
+apt-get install -y openjdk-17-jdk
 
-# Set JAVA_HOME environment variable
+# Set the JAVA_HOME environment variable for the current session
 export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
 export PATH=$JAVA_HOME/bin:$PATH
 
-# Run Maven build
-./mvnw clean install
+# Verify Java installation
+java -version
 
-# Run the application (adjust as necessary for your project)
-java -jar target/your-app.jar
+# Proceed with your build (Maven example)
+./mvnw clean install
