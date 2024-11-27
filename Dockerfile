@@ -10,5 +10,8 @@ COPY . /app
 # Step 4: Make sure Maven is used to build the application
 RUN ./mvnw clean install
 
+# Expose the port your app listens on
+EXPOSE 8080
+
 # Step 5: Set the default command to run the application (replace with actual jar location)
 CMD ["java", "-jar", "target/your-app.jar"]
