@@ -1,19 +1,10 @@
 package com.example.demo.service;
-
 import com.example.demo.model.Product;
-import com.example.demo.model.ShoppingList;
-import com.example.demo.model.User;
-import com.example.demo.model.UserDTO;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.repository.ShoppingListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService {

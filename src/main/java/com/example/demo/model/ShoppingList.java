@@ -19,7 +19,16 @@ public class ShoppingList {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private User owner;
+
+    @ManyToMany
+    @JoinTable(
+            name = "shoppinglist_participants",
+            joinColumns = @JoinColumn(name = "shoppinglist_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> participants;
+
 
     @OneToMany(mappedBy = "shoppingList", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();

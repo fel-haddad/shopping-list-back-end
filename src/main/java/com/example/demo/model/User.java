@@ -27,8 +27,12 @@ public class User {
     private String password;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShoppingList> shoppingLists = new ArrayList<>();
+    @JsonIgnore
+    @ManyToMany(mappedBy = "participants")
+    private List<ShoppingList> participants;
+
 
     // Constructors, Getters, and Setters
 }

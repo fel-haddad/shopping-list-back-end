@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.User;
-import com.example.demo.model.UserDTO;
+import com.example.demo.model.AuthDTO;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserDetailsServiceImpl;
 import com.example.demo.util.JwtTokenUtil;
@@ -34,7 +34,7 @@ public class AuthController {
     private UserDetailsServiceImpl myUserDetailsService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserDTO request) {
+    public ResponseEntity<?> register(@RequestBody AuthDTO request) {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -43,7 +43,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserDTO request) {
+    public ResponseEntity<?> login(@RequestBody AuthDTO request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
@@ -52,10 +52,8 @@ public class AuthController {
 
         return ResponseEntity.ok(token);
     }
-    @GetMapping()
 
-    public List<User> getAllProducts() {
-            return userRepository.findAll();
-        }
+
+
 
 }

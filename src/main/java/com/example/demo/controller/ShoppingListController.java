@@ -36,7 +36,7 @@ public class ShoppingListController {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         // Get shopping lists belonging to the user
-        List<ShoppingList> shoppingLists = user.getShoppingLists();
+        List<ShoppingList> shoppingLists = shoppingListService.getShoppingListsForUser(user.getUsername());
 
         return ResponseEntity.ok(shoppingLists);
     }
@@ -46,7 +46,11 @@ public class ShoppingListController {
         String username = principal.getName();
         return shoppingListService.createShoppingList(username, shoppingList);
     }
+    @PostMapping("/share/{listId}")
+    public ShoppingList addParticipant(@PathVariable Long listId,  @RequestBody List<Long> userIds) {
 
+        return shoppingListService.addParticipantsToList(listId, userIds);
+    }
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {
         shoppingListService.deleteById(id);
