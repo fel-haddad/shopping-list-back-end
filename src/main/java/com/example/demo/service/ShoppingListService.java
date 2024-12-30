@@ -3,8 +3,10 @@ package com.example.demo.service;
 import com.example.demo.model.ShoppingList;
 import com.example.demo.model.User;
 import com.example.demo.repository.ShoppingListRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,6 +64,24 @@ public class ShoppingListService {
         shoppingList.getParticipants().addAll(usersToAdd);
         // Liste speichern
         return shoppingListRepository.save(shoppingList);
+    }
+    @Transactional
+    public void removeParticipant(Long shoppingListId, String userName) {
+        ShoppingList shoppingList = shoppingListRepository.findById(shoppingListId)
+                .orElseThrow(() -> new EntityNotFoundException("ShoppingList not found"));
+
+        User participant = shoppingList.getParticipants()
+                .stream()
+                .filter(user -> user.getUsername().equals(userName))
+                .findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("User not found in participants"));
+
+        shoppingList.getParticipants().remove(participant);
+
+        participant.getParticipants().remove(shoppingList);
+
+        shoppingListRepository.save(shoppingList);
+        userService.saveUser(participant);
     }
 
 }

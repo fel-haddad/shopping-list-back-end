@@ -15,6 +15,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
    Optional<User> findById(long id);
    @Query("SELECT new com.example.demo.model.UserDTO(u.id, u.username) FROM User u")
    List<UserDTO> findAllUsersWithoutPassword();
+   @Query("SELECT new com.example.demo.model.UserDTO(u.id, u.username) FROM User u " +
+           "WHERE u.username <> :username " +
+           "AND NOT EXISTS (" +
+           "    SELECT sl FROM u.participants sl WHERE sl.id = :listId" +
+           ")"
+             )
+   List<UserDTO> findAllNonParticipantUsersForAlist(Long listId, String username);
 
 }
 

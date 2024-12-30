@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.model.ShoppingList;
 import com.example.demo.model.User;
 import com.example.demo.model.UserDTO;
+import com.example.demo.repository.ShoppingListRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +17,8 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ShoppingListRepository shoppingListRepository;
 
     public User findByUsername(String username) {
         return  userRepository.findByUsername(username)
@@ -33,6 +37,11 @@ public class UserService {
     public List<User> findAllByIds(List<Long> ids){
         return userRepository.findAllById(ids);
     }
+    public List<UserDTO> findAllNonParticipantUsersForAlist(Long listId){
+        ShoppingList shoppingList  =   shoppingListRepository.findById(listId).get();
+        return userRepository.findAllNonParticipantUsersForAlist(listId, shoppingList.getOwner().getUsername());
+    }
+
 
 }
 

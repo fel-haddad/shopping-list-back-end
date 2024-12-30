@@ -55,5 +55,12 @@ public class ShoppingListController {
     public void deleteProduct(@PathVariable Long id) {
         shoppingListService.deleteById(id);
     }
+    @DeleteMapping("/{shoppingListId}/participants/{userName}")
+    public void removeParticipant(
+            @PathVariable Long shoppingListId,
+            @PathVariable String userName) {
+        shoppingListService.removeParticipant(shoppingListId, userName);
+       // return ResponseEntity.ok("Participant removed successfully");
+    }
 }
 
